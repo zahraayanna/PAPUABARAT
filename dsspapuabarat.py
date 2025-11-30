@@ -118,22 +118,34 @@ def load_data(local_xlsx=LOCAL_XLSX_PATH, local_csv=LOCAL_CSV_PATH):
 data = load_data()
 
 # Sidebar controls
-st.sidebar.header("⚙️ Pengaturan")
-extreme_threshold = st.sidebar.number_input("Ambang Hujan Ekstrem (mm/hari)", value=50, min_value=1)
-risk_high = st.sidebar.slider("Ambang Risiko Tinggi (score 0..1)", min_value=0.0, max_value=1.0, value=0.6, step=0.01)
-risk_med = st.sidebar.slider("Ambang Risiko Sedang (score 0..1)", min_value=0.0, max_value=1.0, value=0.3, step=0.01)
-ma_window = st.sidebar.slider("Moving average window (hari)", min_value=1, max_value=60, value=7)
+st.sidebar.markdown("<div class='sidebar-title'>⚙️ Pengaturan</div>", unsafe_allow_html=True)
+
+with st.sidebar:
+    extreme_threshold = st.number_input("Ambang Hujan Ekstrem (mm/hari)", value=50, min_value=1)
+    risk_high = st.slider("Ambang Risiko Tinggi (0–1)", 0.0, 1.0, 0.6, 0.01)
+    risk_med = st.slider("Ambang Risiko Sedang (0–1)", 0.0, 1.0, 0.3, 0.01)
+    ma_window = st.slider("Moving Average (hari)", 1, 60, 7)
 
 # Filters
-st.sidebar.header("📅 Filter data")
-min_date = data['Tanggal'].min().date()
-max_date = data['Tanggal'].max().date()
-date_range = st.sidebar.date_input("Rentang tanggal", value=(min_date, max_date), min_value=min_date, max_value=max_date)
+st.sidebar.markdown("<div class='sidebar-title'>📅 Filter Data</div>", unsafe_allow_html=True)
+
+with st.sidebar:
+    min_date = data['Tanggal'].min().date()
+    max_date = data['Tanggal'].max().date()
+    date_range = st.date_input(
+        "Rentang Tanggal",
+        value=(min_date, max_date),
+        min_value=min_date,
+        max_value=max_date
+    )
+
 
 region = None
 if 'Wilayah' in data.columns:
+    st.sidebar.markdown("<div class='sidebar-title'>🗺️ Pilih Wilayah</div>", unsafe_allow_html=True)
     regions = ['All'] + sorted(data['Wilayah'].unique().tolist())
-    region = st.sidebar.selectbox("Pilih Wilayah", regions)
+    region = st.sidebar.selectbox("Wilayah", regions)
+
 
 start_date, end_date = pd.to_datetime(date_range[0]), pd.to_datetime(date_range[1])
 mask = (data['Tanggal'] >= start_date) & (data['Tanggal'] <= end_date)
@@ -387,6 +399,7 @@ with st.expander("📁 Lihat dan Unduh Data Lengkap"):
         file_name="PAPUABARAT2_hasil_dss.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
 
 
