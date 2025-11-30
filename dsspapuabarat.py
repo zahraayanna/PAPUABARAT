@@ -161,16 +161,15 @@ st.subheader("Ringkasan Cepat")
 
 # helper to render consistent "card" style for all four summary items
 def render_stat_card(col, title, value, subtitle=None):
-"""Render a small HTML card for a statistic.
-col: streamlit column object
-title: label text
-value: formatted string value
-subtitle: optional smaller help text
+"""
+Render a small HTML card for a statistic.
+col: Streamlit column object
+title: label
+value: formatted string
+subtitle: optional small text
 """
 if subtitle:
-subtitle_html = (
-f"<div style='font-size:12px; color:#6b7280; margin-top:4px;'>{subtitle}</div>"
-)
+subtitle_html = f"<div style='font-size:12px; color:#6b7280; margin-top:4px;'>{subtitle}</div>"
 else:
 subtitle_html = ""
 
@@ -399,6 +398,7 @@ with st.expander("📁 Lihat dan Unduh Data Lengkap"):
         file_name="PAPUABARAT2_hasil_dss.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
 
 
