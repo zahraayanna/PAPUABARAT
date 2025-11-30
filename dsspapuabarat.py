@@ -158,7 +158,11 @@ df['Month'] = df['Tanggal'].dt.month
 st.markdown("---")
 st.subheader("Ringkasan Cepat")
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Periode", f"{df['Tanggal'].min().date()} — {df['Tanggal'].max().date()}")
+c1.markdown(f"""
+<div style='font-size:18px; font-weight:600;'>Periode</div>
+<div style='font-size:24px;'>{df['Tanggal'].min().date()} — {df['Tanggal'].max().date()}</div>
+""", unsafe_allow_html=True)
+
 c2.metric("Avg Rain (mm)", f"{df['curah_hujan'].mean():.2f}")
 c3.metric("Avg Temp (°C)", f"{df['Tavg'].mean():.2f}")
 c4.metric("Avg RiskScore", f"{df['RiskScore'].mean():.2f}")
@@ -360,3 +364,4 @@ with st.expander("📁 Lihat dan Unduh Data Lengkap"):
         file_name="PAPUABARAT2_hasil_dss.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
