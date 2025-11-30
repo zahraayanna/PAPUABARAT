@@ -12,10 +12,6 @@ import plotly.graph_objects as go
 # ---------- CONFIG ----------
 st.set_page_config(page_title="DSS Iklim - Papua Barat", layout="wide")
 st.title("🌦️ Decision Support System Iklim — Papua Barat")
-st.markdown(
-    "Dashboard prediksi & analisis iklim. Aplikasi akan mencoba memuat file lokal `PAPUABARAT2.xlsx` (prioritas). "
-    "Jika tidak ada, akan mencoba `data_papuabarat.csv`. Jika keduanya tidak ada, aplikasi membuat data contoh."
-)
 
 # Local data paths (ubah sesuai kebutuhan)
 LOCAL_XLSX_PATH = "PAPUABARAT2.xlsx"
@@ -369,3 +365,4 @@ st.caption(
     "Catatan: Pastikan kolom minimal: Tanggal, curah_hujan, Tn, Tx, Tavg, kelembaban, matahari, kecepatan_angin. "
     "Untuk data nyata, taruh file `PAPUABARAT2.xlsx` di folder yang sama atau `data_papuabarat.csv` jika pakai CSV."
 )
+
