@@ -158,38 +158,34 @@ df['Month'] = df['Tanggal'].dt.month
 st.markdown("---")
 st.subheader("Ringkasan Cepat")
 
-
-# helper to render consistent "card" style for all four summary items
+# helper card renderer
 def render_stat_card(col, title, value, subtitle=None):
-    if subtitle:
-        subtitle_html = (
-            f"<div style='font-size:12px; color:#6b7280; margin-top:4px;'>{subtitle}</div>"
-        )
-    else:
-        subtitle_html = ""
+    subtitle_html = (
+        f"<div style='font-size:12px; color:#6b7280; margin-top:4px;'>{subtitle}</div>"
+        if subtitle else ""
+    )
 
     html = f"""
-    <div style='padding:8px 12px; border-radius:10px;'>
-        <div style='font-size:16px; font-weight:600; color:#111827; margin-bottom:6px;'>{title}</div>
-        <div style='font-size:28px; font-weight:600; white-space:nowrap; color:#111827;'>{value}</div>
+    <div class='summary-card'>
+        <div style='font-size:16px; font-weight:600; color:#475569; margin-bottom:6px;'>{title}</div>
+        <div style='font-size:28px; font-weight:700; white-space:nowrap; color:#0f172a;'>{value}</div>
         {subtitle_html}
     </div>
     """
-
     col.markdown(html, unsafe_allow_html=True)
 
-
-# prepare formatted values
+# formatted values
 start = df['Tanggal'].min().strftime("%Y-%m-%d")
 end = df['Tanggal'].max().strftime("%Y-%m-%d")
 period_text = f"{start} — {end}"
+
 avg_rain = f"{df['curah_hujan'].mean():.2f}"
 avg_temp = f"{df['Tavg'].mean():.2f}"
 avg_risk = f"{df['RiskScore'].mean():.2f}"
 
+# layout: periode lebih lebar
+c1, c2, c3, c4 = st.columns([2, 1, 1, 1])
 
-c1, c2, c3, c4 = st.columns([2,1,1,1])
-# render cards with consistent style and alignment
 render_stat_card(c1, "Periode", period_text)
 render_stat_card(c2, "Avg Rain (mm)", avg_rain)
 render_stat_card(c3, "Avg Temp (°C)", avg_temp)
@@ -391,6 +387,7 @@ with st.expander("📁 Lihat dan Unduh Data Lengkap"):
         file_name="PAPUABARAT2_hasil_dss.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
 
 
