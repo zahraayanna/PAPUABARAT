@@ -161,29 +161,22 @@ st.subheader("Ringkasan Cepat")
 
 # helper to render consistent "card" style for all four summary items
 def render_stat_card(col, title, value, subtitle=None):
-"""
-Render a small HTML card for a statistic.
-col: Streamlit column object
-title: label
-value: formatted string
-subtitle: optional small text
-"""
-if subtitle:
-subtitle_html = f"<div style='font-size:12px; color:#6b7280; margin-top:4px;'>{subtitle}</div>"
-else:
-subtitle_html = ""
+    if subtitle:
+        subtitle_html = (
+            f"<div style='font-size:12px; color:#6b7280; margin-top:4px;'>{subtitle}</div>"
+        )
+    else:
+        subtitle_html = ""
 
+    html = f"""
+    <div style='padding:8px 12px; border-radius:10px;'>
+        <div style='font-size:16px; font-weight:600; color:#111827; margin-bottom:6px;'>{title}</div>
+        <div style='font-size:28px; font-weight:600; white-space:nowrap; color:#111827;'>{value}</div>
+        {subtitle_html}
+    </div>
+    """
 
-col.markdown(
-f"""
-<div style='padding:8px 12px; border-radius:10px;'>
-<div style='font-size:16px; font-weight:600; color:#111827; margin-bottom:6px;'>{title}</div>
-<div style='font-size:28px; font-weight:600; white-space:nowrap; color:#111827;'>{value}</div>
-{subtitle_html}
-</div>
-""",
-unsafe_allow_html=True,
-)
+    col.markdown(html, unsafe_allow_html=True)
 
 
 # prepare formatted values
@@ -398,6 +391,7 @@ with st.expander("📁 Lihat dan Unduh Data Lengkap"):
         file_name="PAPUABARAT2_hasil_dss.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
 
 
