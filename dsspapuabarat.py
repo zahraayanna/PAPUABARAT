@@ -157,24 +157,36 @@ df['Month'] = df['Tanggal'].dt.month
 # Top metrics
 st.markdown("---")
 st.subheader("Ringkasan Cepat")
-c1, c2, c3, c4 = st.columns(4)
-start = df['Tanggal'].min().strftime("%Y-%m-%d")
-end = df['Tanggal'].max().strftime("%Y-%m-%d")
+# create a small helper to render consistent "card" style for all four summary items
 
-c1.markdown(f"""
-<div style='padding:8px 0;'>
-    <div style='font-size:17px; font-weight:600; margin-bottom:4px;'>Periode</div>
-    <div style='font-size:20px; font-weight:500; white-space: nowrap;'>
-        {start} — {end}
-    </div>
+
+def render_stat_card(col, title, value, subtitle=None):
+# value should be already formatted string
+subtitle_html = f"<div style='font-size:12px; color:#6b7280; margin-top:4px;'>{subtitle}</div>" if subtitle else ""
+col.markdown(f"""
+<div style='padding:8px 12px; border-radius:10px;'>
+<div style='font-size:16px; font-weight:600; color:#111827; margin-bottom:6px;'>{title}</div>
+<div style='font-size:28px; font-weight:600; white-space:nowrap; color:#111827;'>{value}</div>
+{subtitle_html}
 </div>
 """, unsafe_allow_html=True)
 
 
-c2.metric("Avg Rain (mm)", f"{df['curah_hujan'].mean():.2f}")
-c3.metric("Avg Temp (°C)", f"{df['Tavg'].mean():.2f}")
-c4.metric("Avg RiskScore", f"{df['RiskScore'].mean():.2f}")
+# prepare formatted values
+start = df['Tanggal'].min().strftime("%Y-%m-%d")
+end = df['Tanggal'].max().strftime("%Y-%m-%d")
+period_text = f"{start} — {end}"
+avg_rain = f"{df['curah_hujan'].mean():.2f}"
+avg_temp = f"{df['Tavg'].mean():.2f}"
+avg_risk = f"{df['RiskScore'].mean():.2f}"
 
+
+c1, c2, c3, c4 = st.columns([2,1,1,1])
+# render cards with consistent style and alignment
+render_stat_card(c1, "Periode", period_text)
+render_stat_card(c2, "Avg Rain (mm)", avg_rain)
+render_stat_card(c3, "Avg Temp (°C)", avg_temp)
+render_stat_card(c4, "Avg RiskScore", avg_risk)
 # ---------------- 1. Rainfall Forecast ----------------
 st.markdown("---")
 st.header("1. Prediksi Curah Hujan (Rainfall Forecast)")
@@ -372,5 +384,6 @@ with st.expander("📁 Lihat dan Unduh Data Lengkap"):
         file_name="PAPUABARAT2_hasil_dss.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
 
