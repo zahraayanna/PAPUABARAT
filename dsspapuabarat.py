@@ -360,9 +360,3 @@ with st.expander("📁 Lihat dan Unduh Data Lengkap"):
         file_name="PAPUABARAT2_hasil_dss.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-
-st.caption(
-    "Catatan: Pastikan kolom minimal: Tanggal, curah_hujan, Tn, Tx, Tavg, kelembaban, matahari, kecepatan_angin. "
-    "Untuk data nyata, taruh file `PAPUABARAT2.xlsx` di folder yang sama atau `data_papuabarat.csv` jika pakai CSV."
-)
-
